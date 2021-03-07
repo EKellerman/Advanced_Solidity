@@ -49,7 +49,7 @@ contract PupperCoinSaleDeployer {
         PupperCoin token = new PupperCoin(name, symbol, 0);
         token_address = address(token);
         
-        PupperCoinSale toke_sale = new PupperCoinSale(1, "PupperCoin", sale_address, now, now + 24 weeks, 18. token_address);
+        PupperCoinSale toke_sale = new PupperCoinSale(1, "PupperCoin", sale_address, now, now + 24 weeks, "PUPR", 18, token_address);
         sale_address = address(token);
         
         
