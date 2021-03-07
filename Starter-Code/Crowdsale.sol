@@ -7,13 +7,21 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/validation/TimedCrowdsale.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/distribution/RefundablePostDeliveryCrowdsale.sol";
 
-// @TODO: Inherit the crowdsale contracts
-contract PupperCoinSale is {
+
+contract PupperCoinSale is Crowdsale, CappedCrowdsale, TimedCrowdsale, RefundablePostDeliveryCrowdsale, MintedCrowdsale {
+    
 
     constructor(
-        // @TODO: Fill in the constructor parameters!
+    
+        uint rate,
+        uint name,
+        uint symbol, 
+        address payable wallet,
+        uint open,
+        uint close,
+        uint goal
     )
-        // @TODO: Pass the constructor parameters to the crowdsale contracts.
+       
         public
     {
         // constructor can stay empty
@@ -26,16 +34,27 @@ contract PupperCoinSaleDeployer {
     address public token_address;
 
     constructor(
-        // @TODO: Fill in the constructor parameters!
+        string memory name,
+        string memory symbol,
+        address payable wallet,
+        uint open,
+        uint close,
+        uint goal
     )
         public
     {
-        // @TODO: create the PupperCoin and keep its address handy
-
-        // @TODO: create the PupperCoinSale and tell it about the token, set the goal, and set the open and close times to now and now + 24 weeks.
-
+        // create the PupperCoin and keep its address handy
+        // create the PupperCoinSale and tell it about the token, set the goal, and set the open and close times to now and now + 24 weeks.
         // make the PupperCoinSale contract a minter, then have the PupperCoinSaleDeployer renounce its minter role
+        PupperCoin token = new PupperCoin(name, symbol, 0);
+        token_address = address(token);
+        
+        PupperCoinSale toke_sale = new PupperCoinSale(1, "PupperCoin", sale_address, now, now + 24 weeks, 18. token_address);
+        sale_address = address(token);
+        
+        
         token.addMinter(token_sale_address);
         token.renounceMinter();
     }
 }
+
